@@ -1,0 +1,40 @@
+{
+  "name": "portfolio",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "@react-pdf/renderer": "^4.2.0",
+    "axios": "^1.7.9",
+    "bootstrap": "^5.3.3",
+    "react-bootstrap": "^2.10.7",
+    "react-github-calendar": "^4.4.1",
+    "react-icons": "^5.4.0",
+    "react-parallax-tilt": "^1.7.246",
+    "react-pdf": "^9.2.1",
+    "react-router-dom": "^6.28.0",
+    "react-tsparticles": "^2.12.2",
+    "tsparticles": "^2.12.0",
+    "typewriter-effect": "^2.21.0",
+    "video-react": "^0.16.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^5.1.1",
+    "eslint": "^9.39.1",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.24",
+    "globals": "^16.5.0",
+    "vite": "^7.2.4"
+  }
+}
