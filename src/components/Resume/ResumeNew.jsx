@@ -1,115 +1,86 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
-import Particle from "../Particle";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import { AiOutlineDownload } from "react-icons/ai";
-import { Document, Page, pdfjs } from "react-pdf";
-import "react-pdf/dist/esm/Page/AnnotationLayer.css";
-import "react-pdf/dist/esm/Page/TextLayer.css";
-import resume from "../../Assets/PDF/Nethmin-Kavindu-Gimhan.pdf";
-
-// Fix 1: Use a more reliable CDN path for the worker
-pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+import resume from "../../Assets/PDF/Nethmin-Kavindu-Gimhan-Resume.pdf";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function ResumeNew() {
   const [width, setWidth] = useState(1200);
-  const [numPages, setNumPages] = useState(null);
-  const [pageNumber, setPageNumber] = useState(1);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const handleResize = () => setWidth(window.innerWidth);
     setWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Fix 2: Add proper loading handlers
-  function onDocumentLoadSuccess({ numPages }) {
-    setNumPages(numPages);
-    setLoading(false);
-    setError(null);
-  }
-
-  function onDocumentLoadError(error) {
-    console.error('Error loading PDF:', error);
-    setError('Failed to load PDF file. Please try downloading it instead.');
-    setLoading(false);
-  }
-
   return (
-    <div>
-      <Container fluid className="resume-section">
-
-        <Row className="resume">
-          {loading && (
-            <div style={{ textAlign: 'center', padding: '20px' }}>
-              <p>Loading PDF...</p>
-            </div>
-          )}
-          
-          {error && (
-            <div style={{ textAlign: 'center', padding: '20px', color: 'red' }}>
-              <p>{error}</p>
-            </div>
-          )}
-
-          <Document
-            file={resume}
-            onLoadSuccess={onDocumentLoadSuccess}
-            onLoadError={onDocumentLoadError}
-            loading={<div style={{ textAlign: 'center' }}>Loading document...</div>}
-            className="d-flex justify-content-center"
-            options={{
-              // Fix 3: Add options for better compatibility
-              cMapUrl: `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/cmaps/`,
-              cMapPacked: true,
-              standardFontDataUrl: `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/standard_fonts/`,
-            }}
-          >
-            <Page
-              pageNumber={pageNumber}
-              scale={width > 786 ? 1.7 : 0.6}
-              renderTextLayer={true}
-              renderAnnotationLayer={true}
-            />
-          </Document>
-
-          {numPages && numPages > 1 && (
-            <div style={{ textAlign: 'center', marginTop: '10px' }}>
-              <p>
-                Page {pageNumber} of {numPages}
-              </p>
-              <Button
-                variant="secondary"
-                disabled={pageNumber <= 1}
-                onClick={() => setPageNumber(pageNumber - 1)}
-                style={{ marginRight: '10px' }}
-              >
-                Previous
-              </Button>
-              <Button
-                variant="secondary"
-                disabled={pageNumber >= numPages}
-                onClick={() => setPageNumber(pageNumber + 1)}
-              >
-                Next
-              </Button>
-            </div>
-          )}
+    <div 
+      className="min-vh-100 py-5"
+    >
+      <Container>
+        {/* Header Section */}
+        <Row className="justify-content-center mb-4">
+          <Col xs={12} className="text-center">
+            <h1 
+              className="display-4 fw-bold text-white mb-3"
+              style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)" }}
+            >
+              My <span style={{ color: "#c770f0" }}>Resume</span>
+            </h1>
+            <p className="lead text-white-50">
+              Feel free to download my resume
+            </p>
+          </Col>
         </Row>
 
-        <Row style={{ justifyContent: "center", position: "relative" }}>
-          <Button
-            variant="primary"
-            href={resume}
-            target="_blank"
-            style={{ maxWidth: "250px" }}
-          >
-            <AiOutlineDownload />
-            &nbsp;Download CV
-          </Button>
+        {/* Download Button */}
+        <Row className="justify-content-center mb-5">
+          <Col xs="auto">
+            <Button
+              href={resume}
+              download="Nethmin-Kavindu-Gimhan-Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="d-flex align-items-center gap-2 px-4 py-3 fw-semibold rounded-pill shadow-lg"
+              style={{
+                background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                border: "2px solid rgba(255, 255, 255, 0.3)",
+                transition: "all 0.3s ease"
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-2px)";
+                e.currentTarget.style.boxShadow = "0 6px 20px rgba(0, 0, 0, 0.3)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "0 4px 15px rgba(0, 0, 0, 0.2)";
+              }}
+            >
+              <AiOutlineDownload size={20} />
+              <span>Download The Resume</span>
+            </Button>
+          </Col>
+        </Row>
+
+        {/* PDF Viewer */}
+        <Row className="justify-content-center">
+          <Col xs={12} lg={10} xl={8}>
+            <div 
+              className="bg-white rounded-3 overflow-hidden shadow-lg"
+              style={{ boxShadow: "0 10px 40px rgba(0, 0, 0, 0.3)" }}
+            >
+              <iframe
+                src={resume}
+                title="Resume"
+                className="w-100 border-0"
+                style={{ 
+                  height: width < 768 ? "600px" : "800px",
+                  display: "block"
+                }}
+              />
+            </div>
+          </Col>
         </Row>
       </Container>
     </div>
