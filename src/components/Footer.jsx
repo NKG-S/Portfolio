@@ -42,7 +42,7 @@ function Footer() {
             {/* LinkedIn */}
             <li className="social-icons">
               <a
-                href="https://www.linkedin.com/in/nethmin-kavindu-386978349/"
+                href="https://www.linkedin.com/in/nethmin-kavindu/"
                 target="_blank"
                 rel="noreferrer"
                 className="footer-icon-link"
